@@ -20,9 +20,9 @@ router.get('/',async(req,res)=>{
 
 router.post('/', async(req,res)=>{
     try{
-        const {title, note_collection, content} = req.body;
+        const {title, user_id,note_collection, content} = req.body;
 
-        const noteCreated = new Note({title, note_collection, content } );
+        const noteCreated = new Note({title, user_id,note_collection, content } );
 
         const noteSaved = await noteCreated.save();
 
@@ -51,11 +51,12 @@ router.get('/recent', async (req, res) => {
   router.patch('/:id', async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, collection, content } = req.body;
+      const { title, user_id, note_collection, content } = req.body;
   
       const updatedNote = await Note.findByIdAndUpdate(id, {
         title,
-        collection,
+        user_id,
+        note_collection,
         content,
       }, { new: true });
   
