@@ -85,6 +85,42 @@ router.get('/recent', async (req, res) => {
       res.status(500).json({ message: error.message });
     }
   });
+
+  router.delete('/:id',async(req,res)=>{
+    try{
+        const id=req.params.id;
+        const del_note= await Note.findOneAndDelete({_id: id});
+        if(del_note){
+            res.status(200).json(del_note);
+        }
+        else{
+            res.status(404).json({'message':'note not found'})
+        }
+        
+    }
+    catch(error){
+        res.status(500).json({'message':error.message});
+    }
+  })
+
+  router.delete('/user/:user_id',async(req,res)=>{
+    try{
+        const user_id=req.params.user_id;
+        const del_note= await Note.deleteMany({user_id: user_id});
+        if(del_note.deletedCount > 0){
+            res.status(200).json(del_note);
+        }
+        else{
+            res.status(404).json({'message':'note not found'})
+        }
+        
+    }
+    catch(error){
+        res.status(500).json({'message':error.message});
+    }
+  })
+  
+  
   
   
   
